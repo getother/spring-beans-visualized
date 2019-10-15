@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express')
 var request = require('request')
 var app = express()
@@ -10,7 +11,10 @@ var SCHEMA = process.env.CLIENT_APP_SCHEMA
 var HOST = process.env.CLIENT_APP_HOST
 var PORT = process.env.CLIENT_APP_PORT
 var ACTUATOR_BASE_PATH = process.env.CLIENT_APP_ACTUATOR_BASE_PATH
-var BEANS_URL = SCHEMA + '://' + USER + ':' + PASSWORD + '@' + HOST + ':' + PORT + ACTUATOR_BASE_PATH + '/beans'
+
+var AUTH = USER !== '' ? USER + ':' + PASSWORD + '@' : '';
+var BEANS_URL = SCHEMA + '://'+ AUTH + HOST + ':' + PORT + ACTUATOR_BASE_PATH + '/beans'
+//var BEANS_URL = SCHEMA + '://' + USER + ':' + PASSWORD + '@' + HOST + ':' + PORT + ACTUATOR_BASE_PATH + '/beans'
 
 var time = function() { return new Date().getTime() }
 var timeSince = function(start) { return time() - start }

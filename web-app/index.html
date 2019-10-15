@@ -46,10 +46,21 @@ var drawApplicationGraph = function(beanUrl, typeFilter, highlightBeans, calcull
       return;
     };
 
+	/*
     var beanTypeContains = function(b, filter) { return b.type.toLowerCase().indexOf(filter.toLowerCase()) != -1 };
     var beans = typeFilter != ''
                 ? json[0].beans.filter(function(b){ return beanTypeContains(b, typeFilter)})
                 : json[0].beans;
+	*/
+	var beanJson = Object.keys(json.contexts["application-1"].beans).map(function(b) {
+						json.contexts["application-1"].beans[b]["bean"] = b;
+						return json.contexts["application-1"].beans[b]
+					});
+    var beanTypeContains = function(b, filter) { return b.type.toLowerCase().indexOf(filter.toLowerCase()) != -1 };
+    var beans = typeFilter != ''
+                ? beanJson.filter(function(b){ return beanTypeContains(b, typeFilter)})
+                : beanJson;
+				
     var beanNodes = beans.map(function (b){
       return {
         name: b.bean,
